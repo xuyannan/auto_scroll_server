@@ -1,0 +1,9 @@
+exports.config = function(){
+    return {
+        'site_title' : 'AutoScroll',
+        'db' : {
+            'url' : 'USER:PWD@DB_URL',
+            'collections' : ['memories' , 'users']
+        }
+    };
+}
