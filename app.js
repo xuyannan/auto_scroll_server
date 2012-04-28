@@ -4,10 +4,15 @@
  */
 var C = require('./config').config();
 var express = require('express')
-  , routes = require('./routes')
+//  , routes = require('./routes')
   , md5 = require('MD5')
   , url = require('url');
 
+var routes = {
+  'index' : require('./routes').index,
+  'newuser'  : require('./routes/user').newuser
+}; 
+console.log(routes);
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -113,6 +118,9 @@ app.get('/store', function(req , res){
       }
   });
 });
+
+
+app.get('/newuser' , routes.newuser);
 
 //注册
 app.get('/register' , function(req , res) {
