@@ -1,6 +1,6 @@
 - var html = "<script type='text/javascript' src='js/jquery.min.js'></script>"
 | !{html}
-h1 register
+h1 Auto Scroll register
 #register
   p
     label(for="email") email:
@@ -13,138 +13,43 @@ h1 register
     input(type="password")#re_password
   p
     button#btn_submit submit
-  p
-    div#message
 
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
-  p 111
+div#message
 
 script
+  var BASE_URL = 'http://autoscroll.cutefool.net';
   $('#btn_submit').click(function(){
     var validate_password = function(pwd , re_pwd) {
       if( ! pwd || ! re_pwd ) {
         return false;
       }
       if( pwd != re_pwd) {
-        console.log(2);
         return false;
       }
-      return true;
+      if( pwd.length < 6 ) {
+        return false;
+      }
+      return /^\[a-zA-z0-9_]+$/.test(pwd);
+    };
+    var validate_email = function(str) {
+      if( ! str ) return false;
+      return /\[a-zA-Z0-9]+([-+.]\[a-zA-Z0-9]+)*@\[a-zA-Z0-9]+([-.]\[a-zA-Z0-9]+)*\.\[a-zA-Z0-9]+([-.]\[a-zA-Z0-9]+)*/.test(str);
     };
 
     var _email = $('#email').val();
     var _password = $('#password').val();
     var re_password = $('#re_password').val();
+    if( !validate_email( _email) ){
+      $('#message').html('invalidate email');
+      return false;
+    }
     if( !validate_password( _password , re_password) ){
       $('#message').html('invalidate password');
       return false;
     }
     
     $.ajax({
-      'url' : 'http://localhost:8081/register',
+      'url' : BASE_URL + '/register',
       'type' : 'get',
       'dataType' : 'json',
       'data' : {'email' : _email , 'password' : _password},
@@ -153,7 +58,8 @@ script
           $('#message').html(obj.msg);
           return false;
         }
-        $('#message').html('success');
+        $('#register').remove();
+        $('#message').html('success,now you can open Auto Scroll options page and login! ');
       },
       'error' : function(){}
     });
