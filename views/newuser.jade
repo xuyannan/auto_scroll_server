@@ -1,4 +1,4 @@
-- var html = "<script type='text/javascript' src='jquery.min.js'></script>"
+- var html = "<script type='text/javascript' src='js/jquery.min.js'></script>"
 | !{html}
 h1 register
 #register
@@ -7,11 +7,154 @@ h1 register
     input#email
   p
     label(for="password") password:
-    input#password
+    input(type="password")#password
   p
-    label(for="re-password") confirm password:
-    input#re-password
+    label(for="re_password") confirm password:
+    input(type="password")#re_password
   p
-    button#btn-submit submit
+    button#btn_submit submit
+  p
+    div#message
+
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+  p 111
+
 script
-  console.log('hello');
+  $('#btn_submit').click(function(){
+    var validate_password = function(pwd , re_pwd) {
+      if( ! pwd || ! re_pwd ) {
+        return false;
+      }
+      if( pwd != re_pwd) {
+        console.log(2);
+        return false;
+      }
+      return true;
+    };
+
+    var _email = $('#email').val();
+    var _password = $('#password').val();
+    var re_password = $('#re_password').val();
+    if( !validate_password( _password , re_password) ){
+      $('#message').html('invalidate password');
+      return false;
+    }
+    
+    $.ajax({
+      'url' : 'http://localhost:8081/register',
+      'type' : 'get',
+      'dataType' : 'json',
+      'data' : {'email' : _email , 'password' : _password},
+      'success' : function(obj){
+        if(obj.code != 0) {
+          $('#message').html(obj.msg);
+          return false;
+        }
+        $('#message').html('success');
+      },
+      'error' : function(){}
+    });
+  });

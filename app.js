@@ -1,4 +1,4 @@
-
+//require.paths.push('/usr/local/lib/node/');
 /**
  * Module dependencies.
  */
@@ -63,7 +63,7 @@ app.get('/download' , function(req , res) {
             res.send(JSON.stringify(_res));
           } else {
             _res.code = 1,
-            _res.msg = 'wrong user';
+            _res.msg = 'no data for this user , token:' + user_id;
             res.send(JSON.stringify(_res));
           }
       }
@@ -72,16 +72,22 @@ app.get('/download' , function(req , res) {
 });
 
 // save user's memories 
-app.get('/store', function(req , res){
+app.get('/upload', function(req , res){
   var params = url.parse(req.url , true);
+  if( ! params.query.token) {
+    console.log('no token');
+    return false;
+  }
+  var token = params.query.token;
+  console.log(token + ' is uploading data...');
   var db = require('mongojs').connect(C.db.url , C.db.collections);
-  var user_id = 'xyn0563@gmail.com';
+  var user_id = token;
   var _res = {
     'code' : 0,
     'msg' : ''
   };
 
-  db.memories.find({'user_id' : user_id } , function(err , result) {
+  db.memories.find({'user_id' : user_id} , function(err , result) {
       if(err) {
           console.log(err);
           _res.code = 1;
@@ -182,7 +188,7 @@ app.get('/login' , function(req , res) {
               res.send(JSON.stringify(_res));
           } else {
               _res.code = 1;
-              _res.msg = error;
+              _res.msg = 'login failed';
               res.send(JSON.stringify(_res));
           }
       }
